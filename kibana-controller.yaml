@@ -20,10 +20,13 @@ spec:
       serviceAccount: elk
       containers:
       - name: kibana
-        image: quay.io/pires/docker-kibana:4.1.1
+        image: tangfeixiong/kibana:4.5.1 # quay.io/pires/docker-kibana:4.1.1
+        imagePullPolicy: IfNotPresent
         env:
         - name: KIBANA_ES_URL
-          value: "http://elasticsearch.default.svc.cluster.local:9200"
+          value: "http://10.3.0.248:9200" # "http://elasticsearch.default.svc.cluster.local:9200"
+        - name: KIBANA_INDEX
+          value: "logstash-*"
         - name: KUBERNETES_TRUST_CERT
           value: "true"
         ports:

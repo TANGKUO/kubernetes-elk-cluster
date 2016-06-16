@@ -19,8 +19,10 @@ spec:
     spec:
       serviceAccount: elk
       containers:
-      - name: logstash
-        image: pires/logstash
+      - command: ["/logstash/bin/logstash", "-f", "/logstash/config/logstash.conf", "--verbose"]
+        name: logstash
+        image: tangfeixiong/logstash:2.3.2 # pires/logstash
+        imagePullPolicy: IfNotPresent
         env:
         - name: KUBERNETES_TRUST_CERT
           value: "true"
@@ -29,12 +31,17 @@ spec:
           name: lumberjack
           protocol: TCP
         volumeMounts:
-        - mountPath: /certs
+        - mountPath: /logstash/certs
           name: certs
+        - mountPath: /logstash/config
+          name: config
       volumes:
-      - emptyDir:
-          medium: ""
+      - emptyDir: {}
+          # medium: ""
         name: "storage"
       - hostPath:
-          path: "/tmp"
+          path: "/data/src/github.com/pires/kubernetes-elk-cluster/certs" # "/tmp"
         name: "certs"
+      - hostPath:
+          path: "/data/src/github.com/pires/kubernetes-elk-cluster/config"
+        name: "config"

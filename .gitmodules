@@ -1,0 +1,6 @@
+[submodule "lib/docker-logstash"]
+	path = lib/docker-logstash
+	url = https://github.com/stackdocker/docker-logstash
+[submodule "lib/docker-kibana"]
+	path = lib/docker-kibana
+	url = https://github.com/stackdocker/docker-kibana
